@@ -26,14 +26,14 @@ public class UserDetails {
     @Size(max = 255)
     private String lastName;
 
-    private String address;
-
     @Email
     @NotBlank
     @Size(max = 255)
     private String email;
 
     private Date birthDate;
+
+
     public Long getId() {
         return id;
     }
@@ -50,14 +50,6 @@ public class UserDetails {
         this.user = user;
     }
 
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public Date getBirthDate() {
         return birthDate;
