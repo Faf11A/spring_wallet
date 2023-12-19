@@ -1,0 +1,113 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.history-card {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #495057;
+    margin-top: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ced4da;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.filter-fieldset, .sort-fieldset, .sort-order-fieldset, .transaction-table-fieldset {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center; /* Добавлен стиль для выравнивания по центру */
+}
+
+.filter-legend, .sort-legend, .sort-order-legend, .transaction-table-legend {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.filter-label, .sort-label, .sort-order-label {
+    margin-right: 10px;
+}
+
+.sort-links {
+    margin-top: 10px;
+}
+
+.sort-links a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.fa-sort-up, .fa-sort-down {
+    margin-left: 5px;
+    color: #007bff;
+}
+
+.sort-links a:hover {
+    text-decoration: underline;
+}
+
+.green-button {
+    background-color: rgb(114, 114, 114);
+    color: #000000;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+    width: 50%;
+    margin-bottom: 30px;
+}
+
+.green-button:hover {
+    background-color: rgb(104, 157, 104);
+}
+
+.red-button {
+    background-color: rgb(114, 114, 114);
+    color: #000000;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+    width: 50%;
+    margin-bottom: 30px;
+}
+
+.red-button:hover {
+    background-color: rgb(189, 88, 88);
+}
