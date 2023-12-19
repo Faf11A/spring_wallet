@@ -27,7 +27,6 @@ public class Transaction {
     private BigDecimal amount;
     private LocalDate date;
     private String description;
-    private String type;
 
     public Long getTransactionId() {
         return Id;
@@ -75,14 +74,6 @@ public class Transaction {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }
 

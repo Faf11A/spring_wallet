@@ -6,15 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.coderslab.dao.UserDao;
-import pl.coderslab.dao.UserDetailsDao;
+import pl.coderslab.dao.*;
+import pl.coderslab.model.Category;
 import pl.coderslab.model.User;
 import pl.coderslab.model.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-import java.time.LocalDate;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.Objects;
 
@@ -23,11 +23,18 @@ public class AuthController {
 
     private final UserDao userDao;
     private final UserDetailsDao userDetailsDao;
+    private final BudgetDao budgetDao;
+    private final TransactionDao transactionDao;
+    private final CategoryDao categoryDao;
+
 
     @Autowired
-    public AuthController(UserDao userDao, UserDetailsDao userDetailsDao) {
+    public AuthController(UserDao userDao, UserDetailsDao userDetailsDao, BudgetDao budgetDao, TransactionDao transactionDao, CategoryDao categoryDao) {
         this.userDao = userDao;
         this.userDetailsDao = userDetailsDao;
+        this.budgetDao = budgetDao;
+        this.transactionDao = transactionDao;
+        this.categoryDao = categoryDao;
     }
 
     @GetMapping("/login")
@@ -39,18 +46,17 @@ public class AuthController {
     @PostMapping("/login")
     public String processLogin(@RequestParam("login") String login,
                                @RequestParam("password") String password,
-                               Model model, RedirectAttributes attributes) {
+                               HttpSession session,
+                               RedirectAttributes attributes) {
         String pswd = userDao.findPasswordByLogin(login);
 
-        if(pswd != null && Objects.equals(pswd, password)){
-
+        if (pswd != null && Objects.equals(pswd, password)) {
             Long userId = userDao.findUserIdByLogin(login);
             String username = userDetailsDao.findUsernameById(userId);
-            model.addAttribute("username", username);
-
+            session.setAttribute("userId", userId);
+            session.setAttribute("username", username);
             return "redirect:/wallet";
-        }
-        else{
+        } else {
             attributes.addFlashAttribute("error", "Invalid login or password");
             return "redirect:/login";
         }
@@ -76,12 +82,18 @@ public class AuthController {
 
         userDao.saveUser(user);
         userDetailsDao.saveUserDetails(userDetails);
+        budgetDao.createFirstBudgetForNewUser(user);
+
+        Category category = categoryDao.findById(100L);
+        transactionDao.addFirstTransaction(category, user);
+
 
         return "redirect:/login?mode=login";
     }
 
-    @GetMapping("/wallet")
-    public String showWalletPage() {
-        return "wallet";
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 }

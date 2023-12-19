@@ -88,7 +88,9 @@
             <input type="password" id="password_reg" name="password" required>
 
             <label for="dob">Date of Birth:</label>
+            <small>Date of Birth cannot be changed after registration</small>
             <input type="date" id="dob" name="dob" required>
+
 
             <button type="submit">Register</button>
 

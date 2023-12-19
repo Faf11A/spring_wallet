@@ -15,14 +15,14 @@ public class Budget {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String category;
+    private String name;
     private BigDecimal amount;
 
-    public Long getBudgetId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setBudgetId(Long budgetId) {
+    public void setId(Long budgetId) {
         this.Id = budgetId;
     }
 
@@ -34,14 +34,13 @@ public class Budget {
         this.user = user;
     }
 
-    public String getCategory() {
-        return category;
+    public String getName() {
+        return name;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setName(String name) {
+        this.name = name;
     }
-
     public BigDecimal getAmount() {
         return amount;
     }
