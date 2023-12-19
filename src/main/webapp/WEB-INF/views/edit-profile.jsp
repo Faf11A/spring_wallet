@@ -103,6 +103,7 @@
             <fieldset>
                 <legend>Account Information</legend>
                 <label for="username">Login:</label>
+                <small>Login cannot be changed after registration</small>
                 <input type="text" id="username" name="username" value="${user.login}" required>
 
                 <label for="password">Password:</label>
@@ -119,11 +120,11 @@
 
                 <label>Date of Birth:</label>
                 <div>
-                    <fmt:formatDate value="${formattedDate != null ? formattedDate : userDetails.birthDate}" pattern="yyyy-MM-dd"/>
+                    <fmt:formatDate value="${formattedDate != null ? formattedDate : userDetails.birthDate}"
+                                    pattern="yyyy-MM-dd"/>
                 </div>
                 <small>Date of Birth cannot be changed after registration</small>
-                <input type="hidden" name="dob" value="${formattedDate != null ? formattedDate : userDetails.birthDate}">
-                <small>${formattedDate != null ? "Date of Birth cannot be changed after registration" : ""}</small>
+
             </fieldset>
 
 
@@ -133,7 +134,7 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" value="${userDetails.email}" required>
             </fieldset>
-                <button type="submit">Submit</button>
+            <button type="submit">Submit</button>
 
         </form>
 

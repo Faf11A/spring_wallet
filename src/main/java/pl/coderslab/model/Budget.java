@@ -41,6 +41,7 @@ public class Budget {
     public void setName(String name) {
         this.name = name;
     }
+
     public BigDecimal getAmount() {
         return amount;
     }

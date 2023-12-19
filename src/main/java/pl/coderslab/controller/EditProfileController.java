@@ -28,14 +28,13 @@ public class EditProfileController {
         this.userDetailsDao = userDetailsDao;
     }
 
+    //GET for edit-profile
     @RequestMapping("/edit-profile")
     public String EditProfilePage(HttpSession session, Model model) {
         Long userId = (Long) session.getAttribute("userId");
 
         User user = userDao.getUserById(userId);
         UserDetails userDetails = userDetailsDao.getUserDetailsById(userId);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(userDetails.getBirthDate());
 
         model.addAttribute("user", user);
         model.addAttribute("userDetails", userDetails);
@@ -43,6 +42,7 @@ public class EditProfileController {
         return "edit-profile";
     }
 
+    //POST for edit-profile
     @PostMapping("/edit-profile")
     public String updateProfile(@ModelAttribute User user, @ModelAttribute UserDetails userDetails, HttpSession session, Model model) {
         Long userId = (Long) session.getAttribute("userId");
@@ -54,30 +54,20 @@ public class EditProfileController {
             existingUser.setLogin(user.getLogin());
         }
         existingUser.setPassword(user.getPassword());
-
         existingUserDetails.setFirstName(userDetails.getFirstName());
         existingUserDetails.setLastName(userDetails.getLastName());
-
-        // Update email
         existingUserDetails.setEmail(userDetails.getEmail());
 
-        // Save changes to the database
         userDao.updateUser(existingUser);
         userDetailsDao.updateUserDetails(existingUserDetails);
 
-        // Refresh the user and userDetails objects in the session
         session.setAttribute("user", existingUser);
         session.setAttribute("userDetails", existingUserDetails);
 
-        // Set success message
         model.addAttribute("success", "Profile updated successfully");
-
-        // Add updated user and userDetails to the model for displaying in the form
         model.addAttribute("user", existingUser);
         model.addAttribute("userDetails", existingUserDetails);
 
         return "edit-profile";
     }
-
-
 }

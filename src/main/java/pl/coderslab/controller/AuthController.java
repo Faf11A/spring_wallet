@@ -37,12 +37,14 @@ public class AuthController {
         this.categoryDao = categoryDao;
     }
 
+    //show login page
     @GetMapping("/login")
     public String showLoginForm(Model model, @RequestParam(value = "mode", defaultValue = "login") String mode) {
         model.addAttribute("mode", mode);
         return "login";
     }
 
+    //signing in
     @PostMapping("/login")
     public String processLogin(@RequestParam("login") String login,
                                @RequestParam("password") String password,
@@ -62,6 +64,7 @@ public class AuthController {
         }
     }
 
+    //registration
     @PostMapping("/register")
     public String processRegistration(@RequestParam("firstname") String firstName,
                                       @RequestParam("lastname") String lastName,
@@ -91,6 +94,7 @@ public class AuthController {
         return "redirect:/login?mode=login";
     }
 
+    //logging out
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
