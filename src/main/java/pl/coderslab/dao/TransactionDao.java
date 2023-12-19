@@ -62,7 +62,6 @@ public class TransactionDao {
                 comparator = Comparator.comparing(t -> t.getCategory().getCategory_name());
                 break;
             default:
-                // If sortBy is not recognized, do not apply sorting
                 return transactions;
         }
 

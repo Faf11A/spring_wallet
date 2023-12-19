@@ -120,7 +120,7 @@
         </fieldset>
 
         <div class="balance">
-            Balance: $<c:out value="${balance}" />
+            Balance: $<c:out value="${balance}"/>
         </div>
 
         <fieldset class="operation-details">
@@ -149,7 +149,7 @@
                     <select id="transactionCategory" name="category" required>
                         <option value="" disabled selected>Choose category</option>
                         <option value="1">Groceries</option>
-                        <option value="2" >Entertainment</option>
+                        <option value="2">Entertainment</option>
                         <option value="3">Transportation</option>
                         <option value="4">Housing</option>
                         <option value="5">Health</option>
@@ -161,7 +161,6 @@
                         <option value="11">Deposit</option>
                     </select>
 
-                    <!-- Description -->
                     <label for="transactionDescription">Description:</label>
                     <input type="text" id="transactionDescription" name="description">
 

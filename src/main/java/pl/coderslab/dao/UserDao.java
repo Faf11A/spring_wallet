@@ -8,7 +8,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Repository
 @Transactional
@@ -16,9 +15,8 @@ public class UserDao {
 
     @PersistenceContext
     private EntityManager entityManager;
-    public User saveUser(User user) {
+    public void saveUser(User user) {
         entityManager.persist(user);
-        return user;
     }
 
     public void deleteUser(Long userId) {
@@ -28,8 +26,8 @@ public class UserDao {
         }
     }
 
-    public User updateUser(User updatedUser) {
-        return entityManager.merge(updatedUser);
+    public void updateUser(User updatedUser) {
+        entityManager.merge(updatedUser);
     }
 
     public User getUserById(Long userId) {
