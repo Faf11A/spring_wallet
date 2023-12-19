@@ -1,12 +1,18 @@
 package pl.coderslab.dao;
 
 import org.springframework.stereotype.Repository;
+import pl.coderslab.model.Category;
 import pl.coderslab.model.Transaction;
+import pl.coderslab.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,45 +41,62 @@ public class TransactionDao {
         }
     }
 
-    public List<Transaction> getAllTransactions() {
-        String queryString = "SELECT t FROM Transaction t";
+    public List<Transaction> getAllTransactionsByUser(Long userId) {
+        String queryString = "SELECT t FROM Transaction t WHERE t.user.id = :userId";
         TypedQuery<Transaction> query = entityManager.createQuery(queryString, Transaction.class);
+        query.setParameter("userId", userId);
         return query.getResultList();
     }
 
-    public List<Transaction> filterByType(List<Transaction> transactions, String transactionType) {
+    public List<Transaction> sortTransactions(List<Transaction> transactions, String sortBy, String sortOrder) {
+        Comparator<Transaction> comparator;
+
+        switch (sortBy) {
+            case "amount":
+                comparator = Comparator.comparing(Transaction::getAmount);
+                break;
+            case "date":
+                comparator = Comparator.comparing(Transaction::getDate);
+                break;
+            case "category":
+                comparator = Comparator.comparing(t -> t.getCategory().getCategory_name());
+                break;
+            default:
+                // If sortBy is not recognized, do not apply sorting
+                return transactions;
+        }
+
+        transactions.sort(comparator);
+
+        if ("desc".equals(sortOrder)) {
+            Collections.reverse(transactions);
+        }
+
+        return transactions;
+    }
+
+    public List<Transaction> filterByCategory(List<Transaction> transactions, Category selectedCategory) {
         return transactions.stream()
                 .filter(transaction -> {
-                    if ("all".equals(transactionType)) {
+                    if (selectedCategory == null) {
                         return true;
                     }
 
-                    Long categoryId = transaction.getCategory().getId();
-                    return ("income".equals(transactionType) && categoryId == 11) ||
-                            ("expense".equals(transactionType) && categoryId >= 1 && categoryId <= 10);
+                    Category transactionCategory = transaction.getCategory();
+                    return transactionCategory != null && transactionCategory.getId().equals(selectedCategory.getId());
                 })
                 .collect(Collectors.toList());
     }
 
-    public List<Transaction> sortTransactions(List<Transaction> transactions, String sortBy, String sortOrder) {
-        transactions.sort((t1, t2) -> {
-            int result;
-            switch (sortBy) {
-                case "amount":
-                    result = t1.getAmount().compareTo(t2.getAmount());
-                    break;
-                case "date":
-                    result = t1.getDate().compareTo(t2.getDate());
-                    break;
-                case "category":
-                    result = t1.getCategory().getCategory_name().compareTo(t2.getCategory().getCategory_name());
-                    break;
-                default:
-                    result = 0;
-            }
-            return ("asc".equals(sortOrder)) ? result : -result;
-        });
+    public void addFirstTransaction(Category category, User user) {
+        Transaction transaction = new Transaction();
 
-        return transactions;
+        transaction.setAmount(BigDecimal.valueOf(0));
+        transaction.setDate(LocalDate.of(1996, 1, 21));
+        transaction.setDescription("Java was shown on this day");
+        transaction.setCategory(category);
+        transaction.setUser(user);
+
+        entityManager.persist(transaction);
     }
 }

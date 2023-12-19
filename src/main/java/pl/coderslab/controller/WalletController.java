@@ -86,26 +86,6 @@ public class WalletController {
 
         transactionDao.save(newTransaction);
         return "redirect:/wallet";
-        //return "add-transaction";
-    }
-
-    @GetMapping("/add-transaction")
-    public String showTransactionForm(Model model, HttpSession session) {
-        List<Category> categories = categoryDao.findAllCategories();
-
-        model.addAttribute("category1", categories.get(0));
-        model.addAttribute("category2", categories.get(1));
-        model.addAttribute("category3", categories.get(2));
-        model.addAttribute("category4", categories.get(3));
-        model.addAttribute("category5", categories.get(4));
-        model.addAttribute("category6", categories.get(5));
-        model.addAttribute("category7", categories.get(6));
-        model.addAttribute("category8", categories.get(7));
-        model.addAttribute("category9", categories.get(8));
-        model.addAttribute("category10", categories.get(9));
-        model.addAttribute("category11", categories.get(10));
-
-        return "wallet";
     }
 
     @PostMapping("/add-transaction")
@@ -131,6 +111,13 @@ public class WalletController {
 
         newTransaction.setDescription(description);
         newTransaction.setUser(user);
+
+        if (categoryId.equals(11L)) {
+            budgetDao.updateBalance(userId, BigDecimal.valueOf(amount));
+        } else {
+            BigDecimal negativeAmount = BigDecimal.valueOf(amount).negate();
+            budgetDao.updateBalance(userId, negativeAmount);
+        }
 
         transactionDao.save(newTransaction);
 

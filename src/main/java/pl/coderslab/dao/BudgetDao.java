@@ -2,6 +2,7 @@ package pl.coderslab.dao;
 
 import org.springframework.stereotype.Repository;
 import pl.coderslab.model.Budget;
+import pl.coderslab.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -42,5 +43,14 @@ public class BudgetDao {
                 .setParameter("amount", amount)
                 .setParameter("userId", userId)
                 .executeUpdate();
+    }
+
+    public void createFirstBudgetForNewUser(User user) {
+        Budget budget = new Budget();
+        budget.setName("My wallet");
+        budget.setAmount(BigDecimal.valueOf(0));
+
+        budget.setUser(user);
+        entityManager.persist(budget);
     }
 }

@@ -133,7 +133,7 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" value="${userDetails.email}" required>
             </fieldset>
-                <button type="submit">Log Out</button>
+                <button type="submit">Submit</button>
 
         </form>
 

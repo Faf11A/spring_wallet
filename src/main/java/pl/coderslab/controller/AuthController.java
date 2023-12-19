@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.coderslab.dao.CategoryDao;
-import pl.coderslab.dao.UserDao;
-import pl.coderslab.dao.UserDetailsDao;
+import pl.coderslab.dao.*;
+import pl.coderslab.model.Category;
 import pl.coderslab.model.User;
 import pl.coderslab.model.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -24,12 +23,17 @@ public class AuthController {
 
     private final UserDao userDao;
     private final UserDetailsDao userDetailsDao;
+    private final BudgetDao budgetDao;
+    private final TransactionDao transactionDao;
     private final CategoryDao categoryDao;
 
+
     @Autowired
-    public AuthController(UserDao userDao, UserDetailsDao userDetailsDao, CategoryDao categoryDao) {
+    public AuthController(UserDao userDao, UserDetailsDao userDetailsDao, BudgetDao budgetDao, TransactionDao transactionDao, CategoryDao categoryDao) {
         this.userDao = userDao;
         this.userDetailsDao = userDetailsDao;
+        this.budgetDao = budgetDao;
+        this.transactionDao = transactionDao;
         this.categoryDao = categoryDao;
     }
 
@@ -78,6 +82,11 @@ public class AuthController {
 
         userDao.saveUser(user);
         userDetailsDao.saveUserDetails(userDetails);
+        budgetDao.createFirstBudgetForNewUser(user);
+
+        Category category = categoryDao.findById(100L);
+        transactionDao.addFirstTransaction(category, user);
+
 
         return "redirect:/login?mode=login";
     }

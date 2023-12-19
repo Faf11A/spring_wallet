@@ -88,7 +88,7 @@
     }
 
     .green-button {
-      background-color: rgba(106, 192, 106, 0.8);
+      background-color: rgb(114, 114, 114);
       color: #000000;
       padding: 12px;
       border: none;
@@ -101,8 +101,26 @@
     }
 
     .green-button:hover {
-      background-color: rgba(0, 128, 0, 1);
+      background-color: rgb(104, 157, 104);
     }
+
+    .red-button {
+      background-color: rgb(114, 114, 114);
+      color: #000000;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: block;
+      margin: 10px auto;
+      width: 50%;
+      margin-bottom: 30px;
+    }
+
+    .red-button:hover {
+      background-color: rgb(189, 88, 88);
+    }
+
   </style>
 </head>
 <body>
@@ -118,12 +136,21 @@
       <fieldset class="filter-fieldset">
         <legend class="filter-legend">Filter by Category</legend>
         <label class="filter-label">
-          <select name="selectedCategory">
-            <option value="all">All Categories</option>
-            <c:forEach var="category" items="${categories}">
-              <option value="${category.categoryId}" ${param.selectedCategory == category.categoryId ? 'selected' : ''}>${category.categoryName}</option>
-            </c:forEach>
-          </select>
+            <select id="transactionCategory" name="category" required>
+              <option value="" disabled selected>Choose category</option>
+              <option value=12>All categories</option>
+              <option value="1">Groceries</option>
+              <option value="2" >Entertainment</option>
+              <option value="3">Transportation</option>
+              <option value="4">Housing</option>
+              <option value="5">Health</option>
+              <option value="6">Personal Expenses</option>
+              <option value="7">Education</option>
+              <option value="8">Bank Transfers</option>
+              <option value="9">Travel</option>
+              <option value="10">Electronics</option>
+              <option value="11">Deposit</option>
+            </select>
         </label>
       </fieldset>
 
@@ -144,8 +171,8 @@
 
       <fieldset class="sort-order-fieldset">
         <legend class="sort-order-legend">Sort Order</legend>
-        <label class="sort-order-label"><input type="radio" name="sortOrder" value="asc" ${param.sortOrder == 'asc' ? 'checked' : ''}>Ascending</label>
-        <label class="sort-order-label"><input type="radio" name="sortOrder" value="desc" ${param.sortOrder == 'desc' ? 'checked' : ''}>Descending</label>
+        <label class="sort-order-label"><input type="radio" name="sortOrder" value="asc" ${param.sortOrder == 'asc' ? 'checked' : ''}> Ascending</label>
+        <label class="sort-order-label"><input type="radio" name="sortOrder" value="desc" ${param.sortOrder == 'desc' ? 'checked' : ''}> Descending</label>
       </fieldset>
 
       <button type="submit" class="green-button">Submit</button>
