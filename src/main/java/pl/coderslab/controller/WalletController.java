@@ -45,7 +45,6 @@ public class WalletController {
         Optional<Budget> budgetOptional = budgetDao.getBudgetByUserId(userId);
         Optional<Transaction> transactionOptional = transactionDao.getLastTransaction(userId);
 
-
         if (budgetOptional.isPresent() && transactionOptional.isPresent()) {
             Budget budget = budgetOptional.get();
             Transaction transaction = transactionOptional.get();
@@ -88,6 +87,7 @@ public class WalletController {
         return "redirect:/wallet";
     }
 
+    //ADD TRANSACTION ON MAIN PAGE
     @PostMapping("/add-transaction")
     public String addTransaction(@RequestParam("amount") Double amount,
                                  @RequestParam("date") String date,

@@ -9,28 +9,22 @@ import java.util.Date;
 @Entity
 @Table(name = "user_details")
 public class UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
     @NotBlank
     @Size(max = 255)
     private String firstName;
-
     @NotBlank
     @Size(max = 255)
     private String lastName;
-
     @Email
     @NotBlank
     @Size(max = 255)
     private String email;
-
     private Date birthDate;
 
 
@@ -49,7 +43,6 @@ public class UserDetails {
     public void setUser(User user) {
         this.user = user;
     }
-
 
     public Date getBirthDate() {
         return birthDate;

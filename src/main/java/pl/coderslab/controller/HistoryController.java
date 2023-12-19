@@ -23,6 +23,7 @@ public class HistoryController {
     @Autowired
     private CategoryDao categoryDao;
 
+    //GET for history and filtration
     @GetMapping("/history")
     public String getTransactionHistory(Model model,
                                         HttpSession session,
@@ -30,20 +31,16 @@ public class HistoryController {
                                         @RequestParam(name = "sortOrder", required = false, defaultValue = "desc") String sortOrder,
                                         @RequestParam(name = "category", required = false, defaultValue = "0") Long categoryId) {
 
-
         Long userId = (Long) session.getAttribute("userId");
-
-        // Получаем транзакции текущего пользователя
         List<Transaction> transactions = transactionDao.getAllTransactionsByUser(userId);
 
-        // Фильтруем транзакции по категории
+        //filtration by category
         Category selectedCategory = (categoryId != 0) ? categoryDao.findById(categoryId) : null;
         transactions = transactionDao.filterByCategory(transactions, selectedCategory);
 
-        // Сортируем транзакции
+        //filtration by and sort order
         transactions = transactionDao.sortTransactions(transactions, sortBy, sortOrder);
 
-        // Получаем список всех категорий
         List<Category> categories = categoryDao.findAllCategories();
 
         model.addAttribute("transactions", transactions);
@@ -54,6 +51,7 @@ public class HistoryController {
         return "history";
     }
 
+    //POST for history and filtration
     @PostMapping("/history")
     public String postTransactionHistory(Model model,
                                          HttpSession session,
@@ -61,20 +59,14 @@ public class HistoryController {
                                          @RequestParam(name = "sortOrder", required = false, defaultValue = "desc") String sortOrder,
                                          @RequestParam(name = "category", required = false, defaultValue = "0") Long categoryId) {
 
-        // Получаем ID текущего пользователя из сессии
         Long userId = (Long) session.getAttribute("userId");
-
-        // Получаем транзакции текущего пользователя
         List<Transaction> transactions = transactionDao.getAllTransactionsByUser(userId);
 
-        // Фильтруем транзакции по категории
         Category selectedCategory = (categoryId != 0) ? categoryDao.findById(categoryId) : null;
         transactions = transactionDao.filterByCategory(transactions, selectedCategory);
 
-        // Сортируем транзакции
         transactions = transactionDao.sortTransactions(transactions, sortBy, sortOrder);
 
-        // Получаем список всех категорий
         List<Category> categories = categoryDao.findAllCategories();
 
         model.addAttribute("transactions", transactions);
@@ -82,6 +74,6 @@ public class HistoryController {
         model.addAttribute("sortOrder", sortOrder);
         model.addAttribute("selectedCategory", categoryId);
 
-        return "history";
+        return "history"; 
     }
 }
