@@ -17,6 +17,7 @@ public class Goal {
     private User user;
 
     private String goalName;
+    private BigDecimal currentAmount;
     private BigDecimal targetAmount;
     private LocalDate targetDate;
 
@@ -58,5 +59,21 @@ public class Goal {
 
     public void setTargetDate(LocalDate targetDate) {
         this.targetDate = targetDate;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public BigDecimal getCurrentAmount() {
+        return currentAmount;
+    }
+
+    public void setCurrentAmount(BigDecimal currentAmount) {
+        this.currentAmount = currentAmount;
     }
 }

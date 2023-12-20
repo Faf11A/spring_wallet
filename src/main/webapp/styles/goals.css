@@ -5,14 +5,23 @@ body {
 }
 
 .container {
-    width: 50%;
+    width: 75%;
     margin: 0 auto;
+}
+
+.balance,
+.wallet-name {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.2em;
 }
 
 .card {
     border: 1px solid #ced4da;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .card-body {
@@ -23,20 +32,54 @@ body {
     margin-bottom: 15px;
 }
 
-.btn-primary {
+.btn-primary,
+.btn-primary2 {
     background-color: #007bff;
     color: #fff;
+    height: 40px;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary2:hover {
     background-color: #0056b3;
 }
 
 .progress {
-    height: 20px;
+    height: 30px;
     margin-top: 10px;
 }
 
 .progress-bar {
-    background-color: #28a745;
+    background-color: #30984a;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #bd2130;
+}
+
+#toggleCompletedGoalsBtn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 1.8em;
+}
+
+.fixed-width-btn {
+    width: 200px; /* Adjust width as necessary */
+}
+
+.toggle-button-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.toggle-btn {
+    margin-right: 10px; /* Отступ между кнопками */
 }

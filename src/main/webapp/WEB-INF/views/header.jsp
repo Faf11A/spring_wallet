@@ -11,7 +11,7 @@
 <header>
     <nav>
         <a href="/wallet">Wallet</a>
-        <a href="#">Goals</a>
+        <a href="/goals">Goals</a>
         <a href="/history">History</a>
 
     </nav>
