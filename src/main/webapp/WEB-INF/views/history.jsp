@@ -23,7 +23,6 @@
                 <legend class="filter-legend">Filter by Category</legend>
                 <label class="filter-label">
                     <select id="transactionCategory" name="category" required>
-                        <option value="" disabled selected>Choose category</option>
                         <option value=12>All categories</option>
                         <option value="1">Groceries</option>
                         <option value="2">Entertainment</option>

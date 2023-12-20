@@ -58,6 +58,16 @@ body {
     color: #fff;
 }
 
+.btn-ch {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-ch:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
 .btn-danger:hover {
     background-color: #bd2130;
 }
@@ -72,7 +82,7 @@ body {
 }
 
 .fixed-width-btn {
-    width: 200px; /* Adjust width as necessary */
+    width: 200px;
 }
 
 .toggle-button-container {
@@ -81,5 +91,32 @@ body {
 }
 
 .toggle-btn {
-    margin-right: 10px; /* Отступ между кнопками */
+    margin-right: 10px;
 }
+
+h4 {
+    text-align: center;
+}
+
+.green-b {
+    background-color: #30984a;
+    color: #fff;
+}
+
+.green-b:hover {
+    background-color: #30984a;
+    color: #fff;
+}
+
+.red-b {
+    background-color: #bd5858;
+    color: #fff;
+}
+
+.red-b:hover {
+    background-color: #b94343;
+    color: #fff;
+}
+
+
+

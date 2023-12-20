@@ -60,7 +60,6 @@
         </div>
     </fieldset>
 
-    <!-- Вывод списка текущих целей -->
     <c:if test="${not empty currentGoals}">
         <hr>
         <h4>Current Goals:</h4>
@@ -76,28 +75,30 @@
                             Target Date: ${goal.targetDate}
                         </p>
                         <div class="progress mt-2" style="height: 30px;">
-                            <div class="progress-bar" style="width: ${((goal.currentAmount / goal.targetAmount) * 100)}%;">
+                            <div class="progress-bar"
+                                 style="width: ${((goal.currentAmount / goal.targetAmount) * 100)}%;">
                                     ${((goal.currentAmount / goal.targetAmount) * 100)}%
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
-                                <!-- Форма для ввода суммы и кнопки "Add Amount" -->
-                                <form action="${pageContext.request.contextPath}/addAmountToGoal" method="post" class="form-inline">
+                                <form action="${pageContext.request.contextPath}/addAmountToGoal" method="post"
+                                      class="form-inline">
                                     <input type="hidden" name="goalId" value="${goal.goalId}">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-success">Add Amount</button>
-                                        <input type="number" class="form-control" id="amount_${goal.goalId}" name="amount" required>
+                                        <input type="number" class="form-control" id="amount_${goal.goalId}"
+                                               name="amount" required>
                                     </div>
                                 </form>
                             </div>
                             <div class="col text-right">
-                                <!-- Желтая кнопка "Edit Goal" и Красная кнопка "Delete Goal" -->
-                                <form action="${pageContext.request.contextPath}/editGoal" method="post" style="display: inline;">
-                                    <input type="hidden" name="goalId" value="${goal.goalId}">
+                                <form action="${pageContext.request.contextPath}/edit/${goal.goalId}" method="get" style="display: inline;">
                                     <button type="submit" class="btn btn-warning">Edit Goal</button>
                                 </form>
-                                <form action="${pageContext.request.contextPath}/deleteGoal" method="post" style="display: inline;">
+
+                                <form action="${pageContext.request.contextPath}/deleteGoal" method="post"
+                                      style="display: inline;">
                                     <input type="hidden" name="goalId" value="${goal.goalId}">
                                     <button type="submit" class="btn btn-danger">Delete Goal</button>
                                 </form>
@@ -109,14 +110,14 @@
         </c:forEach>
     </c:if>
 
-    <!-- Вывод списка выполненных целей -->
     <c:if test="${not empty completedGoals}">
         <hr>
         <div class="toggle-button-container">
-            <button id="toggleCompletedGoalsBtn" class="btn btn-secondary toggle-btn">Show Completed Goals</button>
-            <button id="toggleExpiredGoalsBtn" class="btn btn-secondary toggle-btn">Show Expired Goals</button>
+            <button id="toggleCompletedGoalsBtn" class="btn btn-secondary toggle-btn green-b">Show Completed Goals</button>
+            <button id="toggleExpiredGoalsBtn" class="btn btn-secondary toggle-btn red-b">Show Expired Goals</button>
         </div>
         <div id="completedGoalsSection" class="hidden-section" style="display: none;">
+
             <h4>Completed Goals:</h4>
             <c:forEach var="goal" items="${completedGoals}" varStatus="status">
                 <div class="card mt-3">
@@ -128,19 +129,24 @@
                             Target Date: ${goal.targetDate}
                         </p>
                         <div class="progress mt-2" style="height: 30px;">
-                            <div class="progress-bar" style="width: ${((goal.currentAmount / goal.targetAmount) * 100)}%;">
+                            <div class="progress-bar"
+                                 style="width: ${((goal.currentAmount / goal.targetAmount) * 100)}%;">
                                     ${((goal.currentAmount / goal.targetAmount) * 100)}%
                             </div>
                         </div>
+                        <p> </p>
+                        <form action="${pageContext.request.contextPath}/deleteGoal" method="post"
+                              style="display: inline;">
+                            <input type="hidden" name="goalId" value="${goal.goalId}">
+                            <button type="submit" class="btn btn-danger">Delete Goal</button>
+                        </form>
                     </div>
                 </div>
             </c:forEach>
         </div>
     </c:if>
 
-    <!-- Вывод списка истекших целей -->
     <c:if test="${not empty expiredGoals}">
-        <hr>
         <div id="expiredGoalsSection" class="hidden-section" style="display: none;">
             <h4>Expired Goals:</h4>
             <c:forEach var="goal" items="${expiredGoals}" varStatus="status">
@@ -149,17 +155,30 @@
                         <h5 class="card-title">${goal.goalName}</h5>
                         <p class="card-text">
                             Target Amount: ${goal.targetAmount}<br>
+                            Current Amount: ${goal.currentAmount}<br>
                             Target Date: ${goal.targetDate}
                         </p>
+                        <div class="progress mt-2" style="height: 30px;">
+                            <div class="progress-bar"
+                                 style="width: ${((goal.currentAmount / goal.targetAmount) * 100)}%;">
+                                    ${((goal.currentAmount / goal.targetAmount) * 100)}%
+                            </div>
+                        </div>
                         <div class="row mt-2">
                             <div class="col">
-                                <!-- Поле для изменения даты -->
-                                <form action="${pageContext.request.contextPath}/editGoalDate" method="post" class="form-inline">
+                                <form action="${pageContext.request.contextPath}/editGoalDate" method="post"
+                                      class="form-inline">
                                     <input type="hidden" name="goalId" value="${goal.goalId}">
                                     <div class="form-group">
-                                        <input type="date" class="form-control" id="newDate_${goal.goalId}" name="newDate" required>
-                                        <button type="submit" class="btn btn-danger">Change Date</button>
+                                        <input type="date" class="form-control" id="newDate_${goal.goalId}"
+                                               name="newDate" required>
+                                        <button type="submit" class="btn btn-ch">Change Date</button>
                                     </div>
+                                </form>
+                                <form action="${pageContext.request.contextPath}/deleteGoal" method="post"
+                                      style="display: inline;">
+                                    <input type="hidden" name="goalId" value="${goal.goalId}">
+                                    <button type="submit" class="btn btn-danger">Delete Goal</button>
                                 </form>
                             </div>
                         </div>
@@ -171,8 +190,8 @@
 
     <script>
         var completedGoalsSection = document.getElementById("completedGoalsSection");
-        var expiredGoalsSection = document.getElementById("expiredGoalsSection");
         var toggleCompletedGoalsBtn = document.getElementById("toggleCompletedGoalsBtn");
+        var expiredGoalsSection = document.getElementById("expiredGoalsSection");
         var toggleExpiredGoalsBtn = document.getElementById("toggleExpiredGoalsBtn");
 
         toggleCompletedGoalsBtn.addEventListener("click", function () {

@@ -3,9 +3,7 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.BudgetDao;
 import pl.coderslab.dao.GoalDao;
 import pl.coderslab.dao.UserDao;
@@ -14,6 +12,8 @@ import pl.coderslab.model.*;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,7 +78,6 @@ public class GoalController {
                                   @RequestParam BigDecimal amount,
                                   HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
-        User user = userDao.getUserById(userId);
 
         Goal goal = goalDao.getGoalById(goalId);
         goal.setCurrentAmount(goal.getCurrentAmount().add(amount));
@@ -92,6 +91,56 @@ public class GoalController {
     @PostMapping("/deleteGoal")
     public String deleteGoal(@RequestParam Long goalId) {
         goalDao.deleteGoal(goalId);
+        return "redirect:/goals";
+    }
+
+    @PostMapping("/editGoalDate")
+    public String editGoalDate(@RequestParam String newDate,
+                               @RequestParam Long goalId,
+                               HttpSession session){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate newGoalDate = LocalDate.parse(newDate, formatter);
+
+        Long userId = (Long) session.getAttribute("userId");
+        Goal goal = goalDao.getGoalById(goalId);
+        goal.setTargetDate(newGoalDate);
+
+        goalDao.saveGoal(goal);
+
+        return "redirect:/goals";
+    }
+
+    @GetMapping("/edit/{goalId}")
+    public String showEditGoalPage(@PathVariable Long goalId, Model model) {
+        Goal goal = goalDao.getGoalById(goalId);
+        if (goal != null) {
+            model.addAttribute("goalId", goal.getId());
+            model.addAttribute("goalName", goal.getGoalName());
+            model.addAttribute("targetAmount", goal.getTargetAmount());
+            model.addAttribute("targetDate", goal.getTargetDate());
+            return "edit-goal";
+        } else {
+            return "redirect:/goals";
+        }
+    }
+
+    @PostMapping("/updateGoal")
+    public String updateGoal(@ModelAttribute("goalId") Long goalId,
+                             @ModelAttribute("goalName") String goalName,
+                             @ModelAttribute("targetAmount") BigDecimal targetAmount,
+                             @ModelAttribute("targetDate") String targetDate) {
+        Goal goal = goalDao.getGoalById(goalId);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate newGoalDate = LocalDate.parse(targetDate, formatter);
+
+        if (goal != null) {
+            goal.setGoalName(goalName);
+            goal.setTargetAmount(targetAmount);
+            goal.setTargetDate(newGoalDate);
+            goalDao.saveGoal(goal);
+        }
         return "redirect:/goals";
     }
 }
