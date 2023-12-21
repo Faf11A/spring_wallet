@@ -1,5 +1,6 @@
 package pl.coderslab.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.coderslab.model.Category;
 import pl.coderslab.model.Transaction;
@@ -23,6 +24,7 @@ public class TransactionDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
 
     public void save(Transaction transaction) {
         entityManager.persist(transaction);
@@ -97,5 +99,20 @@ public class TransactionDao {
         transaction.setUser(user);
 
         entityManager.persist(transaction);
+    }
+
+    public long getTransactionCountByCategory(Long categoryId) {
+        String jpql = "SELECT COUNT(t) FROM Transaction t WHERE t.category.id = :categoryId";
+        TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class);
+        query.setParameter("categoryId", categoryId);
+        return query.getSingleResult();
+    }
+
+    public Double getTransactionSumByCategory(Long categoryId) {
+        String jpql = "SELECT SUM(t.amount) FROM Transaction t WHERE t.category.id = :categoryId";
+        TypedQuery<BigDecimal> query = entityManager.createQuery(jpql, BigDecimal.class);
+        query.setParameter("categoryId", categoryId);
+        BigDecimal result = query.getSingleResult();
+        return (result != null) ? result.doubleValue() : 0.0;
     }
 }

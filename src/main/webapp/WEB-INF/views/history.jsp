@@ -35,6 +35,7 @@
                         <option value="9">Travel</option>
                         <option value="10">Electronics</option>
                         <option value="11">Deposit</option>
+                        <option value="12">Your goals</option>
                     </select>
                 </label>
             </fieldset>

@@ -4,16 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.dao.BudgetDao;
-import pl.coderslab.dao.GoalDao;
-import pl.coderslab.dao.UserDao;
+import pl.coderslab.dao.*;
 import pl.coderslab.model.*;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +20,17 @@ public class GoalController {
     private final GoalDao goalDao;
     private final UserDao userDao;
     private final BudgetDao budgetDao;
+    private final CategoryDao categoryDao;
+    private final TransactionDao transactionDao;
+
 
     @Autowired
-    public GoalController(GoalDao goalDao, UserDao userDao, BudgetDao budgetDao) {
+    public GoalController(GoalDao goalDao, UserDao userDao, BudgetDao budgetDao, CategoryDao categoryDao, TransactionDao transactionDao) {
         this.goalDao = goalDao;
         this.userDao = userDao;
         this.budgetDao = budgetDao;
+        this.categoryDao = categoryDao;
+        this.transactionDao = transactionDao;
     }
 
     @GetMapping("/goals")
@@ -78,13 +80,27 @@ public class GoalController {
                                   @RequestParam BigDecimal amount,
                                   HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
+        User user = userDao.getUserById(userId);
 
         Goal goal = goalDao.getGoalById(goalId);
         goal.setCurrentAmount(goal.getCurrentAmount().add(amount));
 
         BigDecimal negativeAmount = amount.negate();
         budgetDao.updateBalance(userId, negativeAmount);
+
+
+        Transaction transaction = new Transaction();
+        Category category = categoryDao.findById(12L);
+        transaction.setUser(user);
+        transaction.setAmount(amount);
+        transaction.setDescription("Amount added to your goals");
+        transaction.setCategory(category);
+        transaction.setDate(LocalDate.now());
+
+        transactionDao.save(transaction);
         goalDao.saveGoal(goal);
+
+
         return "redirect:/goals";
     }
 

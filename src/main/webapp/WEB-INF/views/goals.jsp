@@ -65,7 +65,7 @@
         <h4>Current Goals:</h4>
         <c:set var="currentDate" value="<%= LocalDate.now() %>" scope="page"/>
         <c:forEach var="goal" items="${currentGoals}" varStatus="status">
-            <c:if test="${goal.targetDate.isAfter(currentDate)}"> <!-- Проверка на истекшие цели -->
+            <c:if test="${goal.targetDate.isAfter(currentDate)}">
                 <div class="card mt-3">
                     <div class="card-body">
                         <h5 class="card-title">${goal.goalName}</h5>

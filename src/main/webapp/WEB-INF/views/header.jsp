@@ -13,6 +13,7 @@
         <a href="/wallet">Wallet</a>
         <a href="/goals">Goals</a>
         <a href="/history">History</a>
+        <a href="/stats">Statistics</a>
 
     </nav>
 

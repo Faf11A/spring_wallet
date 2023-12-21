@@ -1,0 +1,57 @@
+h2 {
+    text-align: center;
+}
+
+.goals-statistics {
+    border: 1px solid #ccc;
+    padding: 15px;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.goals-statistics fieldset {
+    border: 2px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.goals-statistics legend {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.progress-done, .progress-current, .progress-expired {
+    height: 100%;
+    float: left;
+}
+
+.goals-details p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.goals-statistics h2 {
+    margin-top: 0px;
+}
+
+.goal-marker {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 2px;
+}
