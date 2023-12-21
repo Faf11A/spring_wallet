@@ -79,7 +79,7 @@ th {
 }
 
 .green-button {
-    background-color: rgb(114, 114, 114);
+    background-color: rgba(106, 192, 106, 0.8);
     color: #000000;
     padding: 12px;
     border: none;
@@ -92,7 +92,7 @@ th {
 }
 
 .green-button:hover {
-    background-color: rgb(104, 157, 104);
+    background-color: rgb(7, 105, 30);
 }
 
 .red-button {

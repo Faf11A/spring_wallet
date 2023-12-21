@@ -5,7 +5,7 @@ body {
 }
 
 .container {
-  width: 50%;
+  width: 75%;
   margin: 0 auto;
 }
 
@@ -50,7 +50,7 @@ input {
   box-sizing: border-box;
 }
 
-button {
+.buttonB {
   background-color: #007bff;
   color: #fff;
   padding: 10px 30px;
@@ -61,7 +61,7 @@ button {
   margin: 0 auto;
 }
 
-button:hover {
+.buttonB:hover {
   background-color: #0056b3;
 }
 
@@ -78,4 +78,35 @@ button:hover {
 .success-message {
   color: #28a745;
   margin-top: 10px;
+}
+
+.red-button {
+  background-color: #b94343;
+  color: #fff;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+.red-button:hover {
+  background-color: #be2e2e;
+}
+
+.green-button {
+  background-color: #689d68;
+  color: #fff;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+.green-button:hover {
+  background-color: green;
+  color: white;
 }

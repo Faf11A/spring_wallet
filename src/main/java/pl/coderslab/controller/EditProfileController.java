@@ -3,29 +3,34 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.coderslab.dao.UserDao;
-import pl.coderslab.dao.UserDetailsDao;
+import pl.coderslab.dao.*;
 import pl.coderslab.model.User;
 import pl.coderslab.model.UserDetails;
 
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Controller
 public class EditProfileController {
 
+    private final GoalDao goalDao;
     private final UserDao userDao;
     private final UserDetailsDao userDetailsDao;
+    private final BudgetDao budgetDao;
+    private final CategoryDao categoryDao;
+    private final TransactionDao transactionDao;
+
 
     @Autowired
-    public EditProfileController(UserDao userDao, UserDetailsDao userDetailsDao) {
+    public EditProfileController(GoalDao goalDao, UserDao userDao, UserDetailsDao userDetailsDao, BudgetDao budgetDao, CategoryDao categoryDao, TransactionDao transactionDao) {
+        this.goalDao = goalDao;
         this.userDao = userDao;
         this.userDetailsDao = userDetailsDao;
+        this.budgetDao = budgetDao;
+        this.categoryDao = categoryDao;
+        this.transactionDao = transactionDao;
     }
 
     //GET for edit-profile
@@ -70,4 +75,18 @@ public class EditProfileController {
 
         return "edit-profile";
     }
+
+    @PostMapping("/del-profile")
+    public String deleteProfile(HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+
+        userDetailsDao.deleteUserDetails(userId);
+        transactionDao.deleteTransactionsByUserId(userId);
+        goalDao.deleteGoalsByUserId(userId);
+        budgetDao.deleteBudgetsByUserId(userId);
+
+        userDao.deleteUser(userId);
+        return "redirect:/logout";
+    }
+
 }

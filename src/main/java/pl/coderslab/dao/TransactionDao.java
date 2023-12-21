@@ -115,4 +115,10 @@ public class TransactionDao {
         BigDecimal result = query.getSingleResult();
         return (result != null) ? result.doubleValue() : 0.0;
     }
+
+    public void deleteTransactionsByUserId(Long userId) {
+        entityManager.createQuery("DELETE FROM Transaction t WHERE t.user.id = :userId")
+                .setParameter("userId", userId)
+                .executeUpdate();
+    }
 }

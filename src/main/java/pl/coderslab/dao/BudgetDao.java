@@ -53,4 +53,9 @@ public class BudgetDao {
         budget.setUser(user);
         entityManager.persist(budget);
     }
+    public void deleteBudgetsByUserId(Long userId) {
+        entityManager.createQuery("DELETE FROM Budget t WHERE t.user.id = :userId")
+                .setParameter("userId", userId)
+                .executeUpdate();
+    }
 }

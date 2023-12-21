@@ -87,4 +87,10 @@ public class GoalDao {
 
         return expiredGoals;
     }
+
+    public void deleteGoalsByUserId(Long userId) {
+        entityManager.createQuery("DELETE FROM Goal t WHERE t.user.id = :userId")
+                .setParameter("userId", userId)
+                .executeUpdate();
+    }
 }
